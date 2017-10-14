@@ -1,6 +1,7 @@
 const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
+const port = process.env.PORT || 3000;
 
 var app = express();
 
@@ -27,13 +28,13 @@ app.use((req, res, next) => {
     })
     next();
 }); 
-//set-up handler for http get request, our url is root of app
-app.use((req, res, next) => {
-    res.render('maintenance.hbs');
-});
+//maintenance mode blocks routing and static directory from access
+// app.use((req, res, next) => {
+//     res.render('maintenance.hbs');
+// });
 
 app.use(express.static(__dirname + '/public'));
-//set-up handler for http get request, our url is root of app
+//set-up handler for http get request,our url is root of app
 app.get('/', (req, res) => {
     res.render('home.hbs', {
         pageTitle: 'Home Page',
@@ -52,8 +53,8 @@ app.get('/bad', (req, res) => {
         errorMessage: '404 - The page you requested does not exist'
     });
 });
-//listen on port 3000
-app.listen(3000, () => {
-    console.log('Server is up on port 3000')
+//listen on port 3000 (or heroku dynamically generated no.)
+app.listen(port, () => {
+    console.log(`Server is up on port ${port}`)
 });
 
