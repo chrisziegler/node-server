@@ -16,6 +16,7 @@ hbs.registerHelper('screamIt', (text) => {
     return text.toUpperCase();
 });
 
+//server logging
 app.use((req, res, next) => {
     //toString method creates a nicely formatted time stamp
     var now = new Date().toString();
@@ -48,6 +49,13 @@ app.get('/about', (req, res) => {
     });
 });
 
+app.get('/projects', (req, res) => {
+    res.render('projects.hbs', {
+        pageTitle: 'GitHub Projects',
+        welcomeText: 'A list of my projects surrently available on GitHub'
+    });
+});
+
 app.get('/bad', (req, res) => {
     res.send({
         errorMessage: '404 - The page you requested does not exist'
@@ -57,4 +65,5 @@ app.get('/bad', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is up on port ${port}`)
 });
+
 
